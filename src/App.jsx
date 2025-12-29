@@ -8,7 +8,7 @@ import PrivateRoutes from "./components/PrivateRoutes";
 
 function App() {
   return (
-    <Router>
+    <Router basename={import.meta.env.PROD ? "/f8-fullstack-day42" : ""}>
         <Routes>
             <Route path="/register" element={<Register/>}></Route>
             <Route path="/" element={<PrivateRoutes><Home/></PrivateRoutes>}></Route>
