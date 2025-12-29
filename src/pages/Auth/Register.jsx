@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import schemaRegister from "../../schema/registerSchema";
+import schemaRegister from "../../schemas/registerSchema";
 import { useEffect, useState } from "react";
 import { useMeQuery, useRegisterMutation } from "../../services/auth";
 import { useNavigate, Link } from "react-router";

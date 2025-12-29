@@ -1,54 +1,54 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import schemaLogin from "../../schema/loginSchema";
+import schemaLogin from "../../schemas/loginSchema";
 import { useLoginMutation, useMeQuery } from "../../services/auth";
-import { useNavigate , Link } from "react-router";
+import { useNavigate, Link } from "react-router";
 
 export default function Login() {
 
     const navigate = useNavigate();
 
     const [showPassword, setShowPassword] = useState(false);
-    const {register , handleSubmit ,formState : {errors}} = useForm({resolver : zodResolver(schemaLogin) });
-   
-    const [loginUser , response] = useLoginMutation();
+    const { register, handleSubmit, formState: { errors } } = useForm({ resolver: zodResolver(schemaLogin) });
+
+    const [loginUser, response] = useLoginMutation();
 
 
-    const{ isSuccess } = useMeQuery();
+    const { isSuccess } = useMeQuery();
 
     useEffect(() => {
-        if(isSuccess) {
+        if (isSuccess) {
             navigate("/")
         }
-    },[isSuccess , navigate])
+    }, [isSuccess, navigate])
 
     console.log(response)
 
     useEffect(() => {
-       if(response.isSuccess){
-            const { access_token  } = response.data; 
-            localStorage.setItem("access_token" , access_token)
+        if (response.isSuccess) {
+            const { access_token } = response.data;
+            localStorage.setItem("access_token", access_token)
             navigate("/")
-       }
-    }, [response , navigate]);
+        }
+    }, [response, navigate]);
 
     const handleLogin = async (data) => {
-        try{
+        try {
             console.log("Data từ form");
             console.log(data);
             console.log("Json String");
-            console.log(JSON.stringify(data, null , 2));
+            console.log(JSON.stringify(data, null, 2));
             const result = await loginUser(data).unwrap();
-            console.log("Đăng nhập thành công " , result);
+            console.log("Đăng nhập thành công ", result);
             alert("Bạn đã đăng nhập thành công")
-        }catch(error){
-            console.error("Lỗi đăng nhập " , error);
-            if(error.data) {
-            console.log("Error data : " , error.data);
+        } catch (error) {
+            console.error("Lỗi đăng nhập ", error);
+            if (error.data) {
+                console.log("Error data : ", error.data);
+            }
         }
-    }
-};
+    };
 
     return (
         <form
@@ -120,7 +120,7 @@ export default function Login() {
                 <p className="text-center text-sm text-gray-600 mt-4">
                     Chưa có tài khoản?{" "}
                     <span className="text-amber-600 hover:text-amber-700 font-semibold cursor-pointer">
-                        <Link to ="/register"> Đăng ký </Link>
+                        <Link to="/register"> Đăng ký </Link>
                     </span>
                 </p>
             </div>
